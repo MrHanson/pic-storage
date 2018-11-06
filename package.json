@@ -1,0 +1,14 @@
+{
+  "name": "pic-storage",
+  "version": "1.0.0",
+  "description": "私人图片存储服务",
+  "main": "app.js",
+  "author": "MrHanson",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dateformat": "^3.0.3",
+    "express": "^4.16.4",
+    "formidable": "^1.2.1"
+  }
+}
