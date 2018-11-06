@@ -18,9 +18,13 @@
 
 * https://github.com/MrHanson/pic-storage-view
 
-### 后端架构
+### 后端
 
-* MVC (node + express)
+* node + express
+
+* formiddable解析请求
+
+* cors跨域处理
 
 ### 使用步骤：
 
