@@ -14,6 +14,14 @@
 
 * [node LTS Recommended](https://nodejs.org/en/download/)
 
+### 前端源码：
+
+* https://github.com/MrHanson/pic-storage-view
+
+### 后端架构
+
+* MVC (node + express)
+
 ### 使用步骤：
 
 1. 克隆仓库 git clone
