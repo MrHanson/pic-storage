@@ -15,6 +15,12 @@ module.exports = {
       }
     }
 
+    // 收集传过来的所有图片路径
+    var allPath = []
+    form.on('field', function (name, value) {
+      allPath.push(value)
+    });
+
     form.parse(req, function (err, fields, files) {
       if (err) {
         callback && callback(err)
@@ -29,11 +35,18 @@ module.exports = {
         return
       }
 
-      const picPath = fields.picPath.split('/')[4]
+      allPath.forEach(function (path, index) {
+        const picPath = path.split('/')[4]
 
-      fs.unlink(`./img/${picPath}`, function (err) {
-        callback && callback(err)
+        fs.unlink(`./img/${picPath}`, function (err) {
+          if (err) {
+            callback && callback(err)
+            return
+          }
+        })
       })
+      callback && callback(null)
+      return
     })
   }
 }
