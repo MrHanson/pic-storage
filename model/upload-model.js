@@ -17,6 +17,12 @@ module.exports = {
       }
     }
 
+    // 收集传过来的所有图片
+    var allFiles = []
+    form.on('file', function (err, field, file) {
+      allFiles.push([field, file])
+    })
+
     form.parse(req, function (err, fields, files) {
       if (err) {
         console.log(err)
@@ -32,22 +38,29 @@ module.exports = {
         return
       }
 
-      var time = dateFormat(new Date(), "yyyymmddHHMMss")
-      // files.photo.path代表的是formidable为我们上传文件后绝对路径
-      // 通过path的extname来获取图片后缀
-      var extName = path.extname(files.photo.path)
-      var newName = time + '_' + Math.floor(Math.random() * 123456789) + extName
+      var finalPathArr = []
+      allFiles.forEach(function (file, index) {
+        var fileInfo = file[0]
 
-      var oldPath = files.photo.path
-      var newPath = path.join(__dirname, '../img', newName)
+        var time = dateFormat(new Date(), "yyyymmddHHMMss")
+        // fileInfo.path代表的是formidable为我们上传文件后绝对路径
+        // 通过path的extname来获取图片后缀
+        var extName = path.extname(fileInfo.path)
+        var newName = time + '_' + Math.floor(Math.random() * 123456789) + extName
 
-      //修改文件的名
-      fs.renameSync(oldPath, newPath)
-      var finalPath = path
-        .join('/img', newName)
-        .split('\\')
-        .join('/')
-      callback && callback(null, fields, finalPath)
+        // var oldPath = files.photo.path
+        var oldPath = fileInfo.path
+        var newPath = path.join(__dirname, '../img', newName)
+
+        //修改文件的名
+        fs.renameSync(oldPath, newPath)
+        var finalPath = path
+          .join('/img', newName)
+          .split('\\')
+          .join('/')
+        finalPathArr.push(finalPath)
+      })
+      callback && callback(null, fields, finalPathArr)
     })
   }
 }

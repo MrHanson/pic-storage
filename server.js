@@ -7,9 +7,13 @@ var delPicModel = require('./model/delPic-model')
 
 const PORT = 3000
 
-app.use('/', express.static('view'))
+app.use('/view', express.static('view'))
 app.use('/img', express.static('img'))
 app.use(cors())
+
+app.get('/', function (req, res) {
+  res.redirect('/view')
+})
 
 // 返回已上传到服务端图片的文件列表
 app.get('/getPicList', function (req, res) {
